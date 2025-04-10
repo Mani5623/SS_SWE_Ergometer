@@ -52,5 +52,5 @@ class Experiment:
         self.supervisor = supervisor
         
     def __str__(self):
-        subject_info = f"Subject: {self.subject.first_name} {self.subject.last_name}, Sex: {self.subject.sex}, Age: {self.subject.age}"
+        subject_info = f"Subject: {self.subject.first_name} {self.subject.last_name}, Sex: {self.subject.sex}, Age: {self.subject.age}, Max_HR: {self.subject.max_hr}"
         return f"Experiment: {self.name}, Date: {self.date}, {subject_info}, Supervisor: {self.supervisor.first_name} {self.supervisor.last_name}"
