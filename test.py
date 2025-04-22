@@ -1,17 +1,18 @@
-from my_classes import Subject, Supervisor, Experiment
-from datetime import date
+from my_functions import build_person, build_experiment
 
 if __name__ == "__main__":
-    # Supervisor mit Geburtsdatum
-    supervisor = Supervisor("Jakob", "Haas", date(2005, 7, 24))
+    # Supervisor anlegen und auf Server speichern
+    supervisor = build_person("Jakob", "Haas", "male", 19)
+    supervisor.put()
 
-    # Versuchsperson mit Geburtsdatum
-    subject = Subject("Hanne", "Müller", "female", date(1969, 2, 20))
-    subject.estimate_max_hr()
+    # Subject mit Email anlegen und speichern
+    subject = build_person("Hanne", "Müller", "female", 56, email="hanne.mueller@example.com")
+    subject.put()
+    subject.update_email()
 
-    # Experiment anlegen
-    experiment = Experiment("Herzfrequenz-Analyse", "2025-04-10")
-    experiment.add_supervisor(supervisor)
-    experiment.add_subject(subject)
+    # Experiment bauen
+    experiment = build_experiment("Herzfrequenz-Analyse", "2025-03-24", supervisor, subject)
 
+    # Experiment-Daten ausgeben
     print(experiment)
+
