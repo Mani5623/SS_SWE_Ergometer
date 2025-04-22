@@ -1,4 +1,5 @@
 import requests
+import json
 
 class Person:
     def __init__(self, first_name, last_name, gender, age):
@@ -8,10 +9,17 @@ class Person:
         self.age = age
 
     def put(self):
-        url = "http://localhost:5000/api/person"
+        url = "http://127.0.0.1:5000/api/person"
         data = {"first_name": self.first_name}
-        response = requests.post(url, json=data)
-        print(f"PUT Person: {response.status_code} – {response.text}")
+        requests.post(url, json=data)
+
+    def to_dict(self):
+        return {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "gender": self.gender,
+            "age": self.age
+        }
 
 
 class Subject(Person):
@@ -20,23 +28,31 @@ class Subject(Person):
         self.email = email
 
     def update_email(self):
-        url = "http://localhost:5000/api/person/email"
+        url = "http://127.0.0.1:5000/api/person/email"
         data = {"first_name": self.first_name, "email": self.email}
-        response = requests.post(url, json=data)
-        print(f"Update Email: {response.status_code} – {response.text}")
+        requests.post(url, json=data)
+
+    def to_dict(self):
+        base = super().to_dict()
+        base["email"] = self.email
+        return base
 
 
-def build_person(first_name, last_name, gender, age, email=None):
-    if email:
-        return Subject(first_name, last_name, gender, age, email)
-    else:
-        return Person(first_name, last_name, gender, age)
+class Experiment:
+    def __init__(self, title, date, supervisor, subject):
+        self.title = title
+        self.date = date
+        self.supervisor = supervisor
+        self.subject = subject
 
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "date": self.date,
+            "supervisor": self.supervisor.to_dict(),
+            "subject": self.subject.to_dict()
+        }
 
-def build_experiment(title, date, supervisor, subject):
-    return {
-        "title": title,
-        "date": date,
-        "supervisor": vars(supervisor),
-        "subject": vars(subject),
-    }
+    def save_to_json_file(self, filename):
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(self.to_dict(), f, indent=4, ensure_ascii=False)

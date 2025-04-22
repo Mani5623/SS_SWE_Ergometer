@@ -1,18 +1,23 @@
-from my_functions import build_person, build_experiment
+import json
+from my_functions import Person, Subject, Experiment
 
 if __name__ == "__main__":
-    # Supervisor anlegen und auf Server speichern
-    supervisor = build_person("Jakob", "Haas", "male", 19)
+    # Personen erzeugen
+    supervisor = Person("Jakob", "Haas", "male", 19)
     supervisor.put()
 
-    # Subject mit Email anlegen und speichern
-    subject = build_person("Hanne", "Müller", "female", 56, email="hanne.mueller@example.com")
+    subject = Subject("Hanne", "Müller", "female", 56, email="hanne@example.com")
     subject.put()
     subject.update_email()
 
-    # Experiment bauen
-    experiment = build_experiment("Herzfrequenz-Analyse", "2025-03-24", supervisor, subject)
+    # Experiment erzeugen
+    experiment = Experiment("Herzfrequenz-Analyse", "2025-04-10", supervisor, subject)
 
-    # Experiment-Daten ausgeben
-    print(experiment)
+    #Experiment speichern
+    experiment.save_to_json_file("experiment.json")
+
+    # JSON-Output
+    print(json.dumps(experiment.to_dict(), indent=4, ensure_ascii=False))
+    print("Experiment wurde gespeichert in experiment.json.")
+
 
