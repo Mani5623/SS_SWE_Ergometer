@@ -1,0 +1,17 @@
+{
+    "title": "Herzfrequenz-Analyse",
+    "date": "2025-04-10",
+    "supervisor": {
+        "first_name": "Jakob",
+        "last_name": "Haas",
+        "gender": "male",
+        "age": 19
+    },
+    "subject": {
+        "first_name": "Hanne",
+        "last_name": "Müller",
+        "gender": "female",
+        "age": 56,
+        "email": "hanne@example.com"
+    }
+}
